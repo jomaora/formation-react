@@ -1,7 +1,9 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import Product from "./Product";
 import PropTypes from "prop-types";
 import {TProduct} from "./types";
+import {withRouter} from "react-router-dom";
+import {listCategoryProducts} from './api';
 
 const ProductList = (props) => {
 	const {products} = props;
@@ -27,4 +29,18 @@ ProductList.propTypes = {
 	products: PropTypes.arrayOf(TProduct)
 };
 
-export default ProductList;
+const ConnectedProductList = ({ match }) => {
+	const [products, setProducts] = useState([]);
+
+	// TODO get products from category match.params.category
+	// hook qui remplace componentDidMount
+	useEffect(() => {
+		listCategoryProducts(match.params.category).then(list => setProducts(list));
+
+		return () => {};
+	});
+
+	return <ProductList products={products} />
+};
+
+export default withRouter(ConnectedProductList)

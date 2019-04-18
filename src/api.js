@@ -1,9 +1,3 @@
-import React from 'react'
-import Home from './Home'
-import App from './App'
-import ProductList from './ProductList'
-import NotFound from './NotFound'
-
 const products = [
 	{
 		id: 'f7ebb06d-005e-473b-ae3f-fa0b677086d5',
@@ -129,26 +123,9 @@ const products = [
 	}
 ]
 
-const productsOfCategory = category =>
-	products.filter(product => product.category === category)
-
-export const routes = [
-	{
-		path: '/:category?', // pass param 'category' to whole tree (cf. Header/Menu)
-		component: App,
-		routes: [
-			{
-				path: '/',
-				exact: true,
-				component: Home
-			},
-			{
-				path: '/:category',
-				component: ProductList
-			},
-			{
-				component: NotFound
-			}
-		]
-	}
-]
+export const listCategoryProducts = async category =>
+	new Promise(resolve => {
+		setTimeout(() => {
+			resolve(products.filter(product => product.category === category))
+		}, 1000)
+	})
