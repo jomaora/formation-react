@@ -35,10 +35,11 @@ const ConnectedProductList = ({ match }) => {
 	// TODO get products from category match.params.category
 	// hook qui remplace componentDidMount
 	useEffect(() => {
+		setProducts([]);
 		listCategoryProducts(match.params.category).then(list => setProducts(list));
 
 		return () => {};
-	});
+	}, [match.params.category]);	// on rajoute ce param à useeffet pour qu'il sache ce qui a changé !!
 
 	return <ProductList products={products} />
 };
