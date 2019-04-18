@@ -196,26 +196,23 @@ class App extends Component {
 	}
 	*/
 
-	state = {
-		category: 'kitten'
-	};
-
 	render() {
 		const filterProducts = category => products.filter(p => p.category === category);
 
 		return (
 			<>
-				<Header categories={categories} category={this.state.category}></Header>
+				<Header categories={categories}></Header>
 				<MainContent>
 					<Switch>
 						<Route path="/" component={Home} exact/>
 						<Route path="/:category"
 						render={
-							({match}) =>
-								(
+							({match}) => {
+								return (
 									<ProductList products={filterProducts(match.params.category)} />
-								)
-							}/>
+								);
+							}
+						}/>
 						<Route component={NotFound}/>
 					</Switch>
 				</MainContent>

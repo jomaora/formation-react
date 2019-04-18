@@ -5,22 +5,21 @@ import Menu from './Menu';
 import {TCategory} from "./types";
 
 const Header = (props) => {
-	const {categories, category} = props;
+	const {categories} = props;
 	return (
 		<nav>
 			<div className="nav-wrapper">
 				<Link to="/" className="brand-logo">
 					Bazket
 				</Link>
-				<Menu categories={categories} category={category}></Menu>
+				<Menu categories={categories}></Menu>
 			</div>
 		</nav>
 	);
 };
 
 Header.propTypes = {
-	categories: PropTypes.arrayOf(TCategory),
-	category: PropTypes.string.isRequired
+	categories: PropTypes.arrayOf(TCategory)
 };
 
 export default Header

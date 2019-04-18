@@ -312,3 +312,12 @@ Avec react-router-dom
     pour match exacte (sans exact on gérer les sous routes)
 
     Route peut passer les infos de routing, args dans ce order -> history, location, macth
+
+HOC = functions qui reçoivent et retournent des functions
+
+withRouter --> on lui file un component et il retourne un autre
+        reçoit automatiquement match et location, mais on a besoin
+        d'un Swicth a la racine pour passer le contexte à tous les children
+
+Avec react-router-config
+    on a besoin d'un fichier de config
