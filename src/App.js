@@ -209,19 +209,13 @@ class App extends Component {
 				<MainContent>
 					<Switch>
 						<Route path="/" component={Home} exact/>
-						<Route
-							path="/kitten"
-							render={() => <ProductList products={filterProducts('kitten')}/>}
-						/>
-						<Route
-							path="/doggo" render={() => <ProductList products={filterProducts('doggo')}/>}
-							exact
-						/>
-						<Route
-							path="/bear"
-							render={() => <ProductList products={filterProducts('bear')}/>}
-							exact
-						/>
+						<Route path="/:category"
+						render={
+							({match}) =>
+								(
+									<ProductList products={filterProducts(match.params.category)} />
+								)
+							}/>
 						<Route component={NotFound}/>
 					</Switch>
 				</MainContent>

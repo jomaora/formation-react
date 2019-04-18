@@ -310,3 +310,5 @@ Avec react-router-dom
 
     Switch pour se baser sur le path pour choisir la route à servir, utiliser exact
     pour match exacte (sans exact on gérer les sous routes)
+
+    Route peut passer les infos de routing, args dans ce order -> history, location, macth
