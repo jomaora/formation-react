@@ -206,3 +206,79 @@ _______________________________
 REACT BOILERPLATE
 
  npm create-react-app
+
+--------------------------------
+TP decoupage
+    Card
+
+    Grille de Card
+    Header
+        Menu
+    Popin Basket
+    Liste Items
+    Item
+
+--------------------------------
+Commentaires sur JSX
+
+
+
+_------------
+inputs controllés
+
+render() {
+    return (
+      <main>
+        <div className="container">
+          <div className="row">
+            <div className="col s3">
+              <div className="card">
+                rien
+                <input />
+              </div>
+            </div>
+            <div className="col s3">
+              <div className="card">
+                value
+                <input value="value" />
+              </div>
+            </div>
+            <div className="col s3">
+              <div className="card">
+                defaultValue <input defaultValue="default value" />
+              </div>
+            </div>
+            <div className="col s3">
+              <div className="card">
+                onChange <input onChange={() => {}} />
+              </div>
+            </div>
+          </div>
+        </div>
+      </main>
+    )
+  }
+
+  <input value="value" /> --> genere une error, parce que le value ne change jamais, malgré la mise à jour du state,
+            le rendu se base sur le value passé.
+
+REF dans le DOM
+    regarder doc --> CreateRef() -> stocker la ref et l'utiliser en branchant la ref dans l'elemtn <div ref={this.myRef}>
+
+Input en mode non controllé -> il n'a pas de onclick ni de fonctions de validations sur lui même mais c'est un bouton de
+submit par exemple qui fait le control
+
+Input controllé: <input value="value" />
+    c'est le parent qui définit son value (soit en lecture seule / soit je veux prendre en compte les modifs de l'user
+    et dans ce cas il faut utiliser un onChange)
+
+    <div className="card">
+        value + onChange{' '}
+        <input
+          value={this.state.input4}
+          onChange={e => {
+            console.log(e.target.value)
+            this.setState({ input4: e.target.value })
+          }}
+        />
+      </div>
