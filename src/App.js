@@ -4,6 +4,12 @@ import MainContent from './MainContent'
 import './App.scss'
 import ProductList from "./ProductList";
 
+const categories = [
+	{id: 'kitten', label: 'Kittens'},
+	{id: 'bear', label: 'Bears'},
+	{id: 'doggo', label: 'Dogs'}
+];
+
 const products = [
 	{
 		id: 'f7ebb06d-005e-473b-ae3f-fa0b677086d5',
@@ -187,12 +193,18 @@ class App extends Component {
 	}
 	*/
 
+	state = {
+		category: 'kitten'
+	};
+
 	render() {
+		const filteredProducts = products.filter(p => p.category === this.state.category);
+
 		return (
 			<>
-				<Header></Header>
+				<Header categories={categories} category={this.state.category}></Header>
 				<MainContent>
-					<ProductList products={products}/>
+					<ProductList products={filteredProducts}/>
 				</MainContent>
 			</>
 		)

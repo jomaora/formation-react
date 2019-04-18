@@ -6,3 +6,8 @@ export const TProduct = PropTypes.shape({
 	title: PropTypes.string.isRequired,
 	price: PropTypes.number.isRequired
 });
+
+export const TCategory = PropTypes.shape({
+	id: PropTypes.string.isRequired,
+	label: PropTypes.string.isRequired
+});
