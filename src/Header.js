@@ -11,7 +11,7 @@ const Header = (props) => {
 				<a href="#/" className="brand-logo">
 					Bazket
 				</a>
-				<Menu {... {categories, category}}></Menu>
+				<Menu categories={categories} category={category}></Menu>
 			</div>
 		</nav>
 	);
@@ -19,7 +19,7 @@ const Header = (props) => {
 
 Header.propTypes = {
 	categories: PropTypes.arrayOf(TCategory),
-	category: PropTypes.shape(TCategory)
+	category: PropTypes.string.isRequired
 };
 
 export default Header

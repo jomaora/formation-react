@@ -5,12 +5,13 @@ import {TCategory} from "./types";
 
 const Menu = (props) => {
 	const {categories, category} = props;
+	console.log(category);
 	return (
 		<ul id="nav-mobile" className="right hide-on-med-and-down">
 			{categories.map(c => {
-				const className = (c.id === category.id) ? 'isActive' : null;
+				const isActive = (c.id === category) ? 'active' : '';
 				return (
-					<li>
+					<li className={isActive} key={c.id}>
 						<a href={`#/${c.id}`}>{c.label}</a>
 					</li>
 				);
@@ -24,7 +25,7 @@ const Menu = (props) => {
 
 Menu.propTypes = {
 	categories: PropTypes.arrayOf(TCategory),
-	category: PropTypes.shape(TCategory)
+	category: PropTypes.string.isRequired
 };
 
 export default Menu;
