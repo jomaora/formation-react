@@ -1,0 +1,208 @@
+require --> coté nodejs vient du Commons.js
+pas utilisable côté front pour le nombre d'appels qui sont faites (une par require)
+
+Import, standard ESM pour possibilité front (les modules ES6)
+
+export default {}
+ou
+export const variable = 'XXX;
+----------------
+
+React reutilise des principes anciens (qui n'avaient pas les précedents: Backbone)
+  Composants reutilisabble (déjà faits par Delphi, VB)
+  Immutabilité
+
+Function pures => si identifiés il vaut mieux les memoiser
+  (attention la fonction ne doit pas faire des appels à l'extérieur)
+  ET SURTOUT PAS MODIFIER APRES LES VALUERS RETOURNÉES PAR LE CACHE !!!
+
+function modifier(obj, field, val) {
+  console.log('modifier')
+  if (obj[field] === val) {
+    return obj
+  }
+
+  const clone = Object.assign({}, obj)
+  clone[field] = val
+  return clone
+}
+
+const _modifier = memoize(modifier)
+
+const y = _modifier(x, 'toto', 'tata')
+// y.modif = 2 casse le cache
+
+const z = _modifier(x, 'toto', 'tata')
+
+
+---------------------------------------------------
+REACT est indépendant du moteur du rendu, on parle du cycle de vie
+  react-dom / react-native
+
+  <body>
+    <div id="app"></div> <--- Point d'ancrage
+
+    // ajout des scripts react
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    // ajoute moteur de rendu
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+    <script src="counters.js"></script>
+  </body>
+
+
+VitualDOM = représentation du DOM (pas le vrai DOM)
+    React compare l'arbre avant et après et identifie ce qu'il faut changer
+    pour ne pas modifier que les éléments qui sont impactés. C'est ReactDOM.render
+    qui fait la comparaison des arbres (qu'il génére à partir de createElement)
+
+    !!! VOIR LA DOC DE CES FONCTIONS
+
+
+ECRITURE DE COMPOSANTS VIA CLASSES
+class Composant extend React.Component {
+    render() {
+
+    }
+}
+
+---> Les utiliser pour accéder au cycle de vie / avec les fonction on peut pas :(
+
+----------------------------------------
+Lorsqu'on a des éléments qui son l'un à côté de l'autre, on est pas
+obligé d'utiliser une div pour les avoir, on peut utiliser React.Fragment !!!
+----------------------------------------
+.apply / .call (this, args...) pour appeler une fonction
+----------------------------------------
+
+Component stateful
+
+Ils ont un state, des valeur internes à l'instance
+On peut oas l'utiliser qu'avec les components en classe --> this.state
+Pour faire le rendu à nouveau, on doit appeler this.setSet pour mettre
+à jour le state et de provoquer l'appel à render
+
+setState reçoit soit un object
+soit une function ayant comme param l'ancien valeur du state
+
+setState est non bloquante !!! donc parfois il faut privilegier setState en
+version setState la function qui reçoit comme param le state precedent, comme
+ça on peut enchainer des setState et être sûr que le state est bien modifié
+da,s mes divers appels
+
+
+HOOKS
+-------
+Permet d'utiliser les cycle du component depuis une fonction Component
+--> useState
+    Ordre d'appel de hooks !
+
+    Pas de if, pas de loop autour d'un useXXX
+    A utiliser règle eslint pour ça
+
+* useState retourne [val, functionEditionDeVal]
+
+function Counter2(props) {
+  const [value, setValue] = React.useState(1)
+
+  // on peut appeler useState plusieurs fois, on aura une fonction d'update
+  // pour chaque appel qui est censé modifier le valeur du state qu'on a branché
+
+  return React.createElement(
+    'button',
+    {
+      onClick: () => {
+        setValue(value + 1)
+      }
+    },
+    this.state.value
+  )
+}
+
+* useEffect: permet d'accéder au cycle de vie (faire un truc lorsqu'il se passe qqch
+au montage et à chaque fois qu'il se met à jour)
+
+    useEffect(() => {
+        doSomethingOnMountOrUpdate()
+        // Optionnaly return cleanup function
+        return () => {
+          doSomethingOnUnmountOrBeforeUpdate()
+        }
+      })
+
+----------------------
+Définitions : COMPOSANT / ELEMENT / STATE
+----------------------
+
+Default props:
+    Chaque component a la prop .defaultProps pour attacher des valeurs pour les props
+
+Children:
+    Les enfant d'un component sont stockées dans les properties dans children
+    Pour le parcourir React.Children.map(this.props.children, XXX)
+
+----------------------
+CYCLE
+
+constructeur (init state)
+    -> willMount
+            (deprecié recemment) (le DOM n'est pas encore pret, on peut pas interagir)
+            utilisé avant pour fetcher des données avant que les dom soit montée
+    -> render
+    -> didMount
+            Le component est monté est plutôt préféré pour initialiser les données
+            et il faut penser à le netoyer dans le willUnmount (annuler des requetes en
+            pas resolues, timers, event listeners, etc)
+
+lorsque les props modifiés ->
+    -> willUpdate : reçoit nextPros et currentProps
+            le component ba se mettre à jour
+            mais on peut pas acceder à setState
+            utilisé aussi comme une sorte de nettoyage avant de refaire l'update
+
+    -> render
+
+    -> didUpdate (prevProps, prevState, snapshot)
+            on peut comparer les props et state courant (dans this)
+            snapshot: return de la function getSnapshotBeforeUpdate qui remplace willReceiveProps
+            le dom actualisé c'est le moment de faire des appels
+
+
+    * willReceiveProps: on va recevoir des props qui viennent du parent
+            aussi déprécié
+            Elle ne reçoit que les props et non le state, donc pas intéressant
+
+
+shouldComponentUpdate !!! -> appelé à chaque fois qu'il y a un changementde state ou props et renvoie un boolean
+    si elle return false --> pas de mise à jour du state mais on passe pas par willUpdate/didUpdate
+    à utiliser si jamais dans une objet state complexe il n'y a que quelques properties qui définissent qu'il
+    faut l'updater
+    Donc -> optiisation du rendu (car on valide les conditions de mis à jour de rendu)
+
+
+lorsqu'il dispait, willUnmount
+
+-------------------------------
+TYPE
+
+Proptypes: c'est un package à inclure. Declare un tas de validateurs du composant.
+
+MonComponent.propTypes  --> Proptypes.oneOf, arrayOf, shape, isRequired, etc.
+
+-------------------------------
+JSX
+
+Pour éviter les problème de createElement imbriqués lorsqu'on veut représenter un arbre c'est compliqué
+On est obligé de passer par la transpilation lorsqu'on l'utilise --> env de dev pour compiler: ES6/modules/JSX/hot reload
+
+    ESlint
+    Babel       -> transpilation (se base sur des plugins, de syntaxe, de transformation)
+    Webpack     -> resoud tous les fichiers (construit l'arbre de dependence) il les traite (babel, min, pretty, concat)
+                   qu'on lui passe et sorte un bundle
+
+HOY: React propose un choix des éléments pour les env de dev -> ces package et de config par défaut
+
+_______________________________
+REACT BOILERPLATE
+
+ npm create-react-app
