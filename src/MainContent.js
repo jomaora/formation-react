@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import ProductList from './ProductList';
 import Cart from './Cart';
 
 const MainContent = ({ children }) => (

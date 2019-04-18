@@ -31,6 +31,34 @@
           href="https://fonts.googleapis.com/icon?family=Material+Icons"
           rel="stylesheet"
   />
+  <style>
+    .cart {
+      display: none;
+    }
+    .cart.open {
+      display: block;
+    }
+    .cart .modal {
+      display: none;
+    }
+    .cart .modal-overlay {
+      display: none;
+    }
+    .cart.open .modal {
+      z-index: 1003;
+      display: block;
+      opacity: 1;
+      top: 10%;
+    }
+    .cart.open .modal-overlay {
+      z-index: 1002;
+      display: block;
+      opacity: 0.5;
+    }
+    .cart input {
+      width: 4rem !important;
+    }
+  </style>
 </head>
 <body>
 <noscript>You need to enable JavaScript to run this app.</noscript>

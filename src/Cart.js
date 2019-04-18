@@ -1,4 +1,4 @@
-import React from "react";
+import React from 'react'
 
 export default () => (
 	<div className="cart">
@@ -37,11 +37,7 @@ export default () => (
 								value="2"
 								onChange={() => alert('TODO')}
 							/>
-							<a
-								className="btn-flat"
-								href="#!"
-								onClick={() => alert('TODO')}
-							>
+							<a className="btn-flat" href="#!" onClick={() => alert('TODO')}>
 								<i className="material-icons">remove_shopping_cart</i>
 							</a>
 						</td>
@@ -68,11 +64,7 @@ export default () => (
 								value="1"
 								onChange={() => alert('TODO')}
 							/>
-							<a
-								className="btn-flat"
-								href="#!"
-								onClick={() => alert('TODO')}
-							>
+							<a className="btn-flat" href="#!" onClick={() => alert('TODO')}>
 								<i className="material-icons">remove_shopping_cart</i>
 							</a>
 						</td>
@@ -91,9 +83,7 @@ export default () => (
 		</div>
 		<div
 			className="modal-overlay"
-			onClick={() =>
-				document.querySelector('.cart').classList.toggle('open')
-			}
+			onClick={() => document.querySelector('.cart').classList.toggle('open')}
 		/>
 	</div>
-);
+)

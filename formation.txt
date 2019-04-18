@@ -325,7 +325,7 @@ Avec react-router-config
 -------------
 Flux
 
-View -> Action -> Dispatch -> Store
+View -> Action -> Dispatch -> Store --> le Store a le State
   ^                            |
   <-----------------------------
 
