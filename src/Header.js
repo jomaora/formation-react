@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 import PropTypes from "prop-types";
 import Menu from './Menu';
 import {TCategory} from "./types";
@@ -8,9 +9,9 @@ const Header = (props) => {
 	return (
 		<nav>
 			<div className="nav-wrapper">
-				<a href="#/" className="brand-logo">
+				<Link to="/" className="brand-logo">
 					Bazket
-				</a>
+				</Link>
 				<Menu categories={categories} category={category}></Menu>
 			</div>
 		</nav>

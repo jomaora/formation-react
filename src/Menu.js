@@ -1,4 +1,5 @@
 import React from "react";
+import {Link} from 'react-router-dom';
 import CartButton from './CartButton'
 import PropTypes from "prop-types";
 import {TCategory} from "./types";
@@ -11,7 +12,7 @@ const Menu = (props) => {
 				const isActive = (c.id === category) ? 'active' : '';
 				return (
 					<li className={isActive} key={c.id}>
-						<a href={`#/${c.id}`}>{c.label}</a>
+						<Link to={`/${c.id}`}>{c.label}</Link>
 					</li>
 				);
 			})}

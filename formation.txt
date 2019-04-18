@@ -220,7 +220,7 @@ TP decoupage
 
 --------------------------------
 Commentaires sur JSX
-
+{/* Modal Structure */}
 
 
 _------------
@@ -282,3 +282,31 @@ Input controllé: <input value="value" />
           }}
         />
       </div>
+
+---------------------------------
+ROUTING
+
+On colle le state dans le hash de lurl
+partager des infos
+
+Mode dégeu
+
+  componentDidMount() {
+    this.setState(
+      JSON.parse(decodeURIComponent(document.location.hash.substring(1)))
+    )
+  }
+
+  componentDidUpdate() {
+    document.location.hash = JSON.stringify(this.state)
+  }
+
+Comment ?
+
+Avec react-router-dom
+ Link --> remplace A
+    il faut alors déclarer un Router !
+    Wrapper l'APP dans BrowserRouter --> qui est ajouté au contexte
+
+    Switch pour se baser sur le path pour choisir la route à servir, utiliser exact
+    pour match exacte (sans exact on gérer les sous routes)

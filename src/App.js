@@ -1,4 +1,7 @@
 import React, { Component } from 'react'
+import {Route, Switch} from 'react-router-dom';
+import Home from './Home'
+import NotFound from './NotFound'
 import Header from './Header'
 import MainContent from './MainContent'
 import './App.scss'
@@ -198,13 +201,29 @@ class App extends Component {
 	};
 
 	render() {
-		const filteredProducts = products.filter(p => p.category === this.state.category);
+		const filterProducts = category => products.filter(p => p.category === category);
 
 		return (
 			<>
 				<Header categories={categories} category={this.state.category}></Header>
 				<MainContent>
-					<ProductList products={filteredProducts}/>
+					<Switch>
+						<Route path="/" component={Home} exact/>
+						<Route
+							path="/kitten"
+							render={() => <ProductList products={filterProducts('kitten')}/>}
+						/>
+						<Route
+							path="/doggo" render={() => <ProductList products={filterProducts('doggo')}/>}
+							exact
+						/>
+						<Route
+							path="/bear"
+							render={() => <ProductList products={filterProducts('bear')}/>}
+							exact
+						/>
+						<Route component={NotFound}/>
+					</Switch>
 				</MainContent>
 			</>
 		)
