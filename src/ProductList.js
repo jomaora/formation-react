@@ -6,6 +6,10 @@ import {TProduct} from "./types";
 const ProductList = (props) => {
 	const {products} = props;
 
+	if (!products.length) {
+		return (<p>Empty list</p>)
+	}
+
 	return (
 		<div className="row">
 			{

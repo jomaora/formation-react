@@ -5,7 +5,6 @@ import {TCategory} from "./types";
 
 const Menu = (props) => {
 	const {categories, category} = props;
-	console.log(category);
 	return (
 		<ul id="nav-mobile" className="right hide-on-med-and-down">
 			{categories.map(c => {
