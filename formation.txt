@@ -321,3 +321,52 @@ withRouter --> on lui file un component et il retourne un autre
 
 Avec react-router-config
     on a besoin d'un fichier de config
+
+-------------
+Flux
+
+View -> Action -> Dispatch -> Store
+  ^                            |
+  <-----------------------------
+
+View:
+    User interagit avec la vue et généré des Actions
+
+Action :
+    object avec props : type / payload / meta / boolean (pour error)
+
+Dispatch:
+    sorte d'event emmiteur. Il appel un dispatch de l'action qui écoute
+    et le fournit au store (il sait communiquer au store)
+    Accessible au tous les composants
+
+Store:
+    Source unique de vérité. Le garant de la cohérence de données.
+
+Redux est une sorte d'implémentation de Flux, qui fait quelques entorses
+au réles de Flux (par exemple Dispatch/Store ne peuvent pas emettre des actions)
+
+---------------
+Redux (ça vient de reducer + flux -> reduce sur les actions pour donner le état du store)
+
+ils constatent:
+    Immutable c'est bien
+    Si c'est immutable, une action nous dise quoi faire et son payload
+
+    store il faut qu'il permete de faire un subscribe et de recuperer les données qui
+        sont dans le store.
+
+    dispatcher c'est une fonction à la quelle je passe ds actions.
+
+donc l'user doit fournir une fonction de transformation qui prend une action
+et qui modifie le store, mais pour que ça soit immutable, donc on lui passe
+l'ancien store et on retourne un nouveau store (cloné) avec ses modifs
+--> REDUCER
+
+Prinicpe fondamentales
+    Store peut change d'état mais le state du store à un moment,
+    ce state n'est pas mutable
+
+    Store source du verité
+
+    Mutations (reduceurs) sont des fonction pures
