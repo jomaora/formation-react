@@ -1,5 +1,5 @@
 import React from "react";
-import PropTypes from "prop-types";
+import {TProduct} from "./types";
 
 /* eslint-disable jsx-a11y/anchor-is-valid */
 
@@ -22,12 +22,7 @@ const Product = (props) => {
 };
 
 Product.propTypes = {
-	product: PropTypes.shape({
-		id: PropTypes.string.isRequired,
-		image: PropTypes.string.isRequired,
-		title: PropTypes.string.isRequired,
-		price: PropTypes.number.isRequired
-	}).isRequired
+	product: TProduct.isRequired
 };
 
 export default Product;

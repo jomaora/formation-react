@@ -1,13 +1,20 @@
 import React from "react";
+import PropTypes from "prop-types";
 import ProductList from './ProductList';
 import Cart from './Cart';
 
-export default () => (
+const MainContent = ({ children }) => (
 	<main>
 		<div className="container">
-			<ProductList></ProductList>
+			{children}
 		</div>
 		{/* Modal Structure */}
 		<Cart/>
 	</main>
 );
+
+MainContent.propTypes = {
+	children: PropTypes.element.isRequired
+}
+
+export default MainContent;
