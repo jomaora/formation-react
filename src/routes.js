@@ -134,6 +134,7 @@ const productsOfCategory = category =>
 
 export const routes = [
 	{
+		path: '/:category?', // pass param 'category' to whole tree (cf. Header/Menu)
 		component: App,
 		routes: [
 			{
