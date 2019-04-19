@@ -1,3 +1,6 @@
+
+WETZLER
+
 require --> coté nodejs vient du Commons.js
 pas utilisable côté front pour le nombre d'appels qui sont faites (une par require)
 
@@ -223,7 +226,7 @@ Commentaires sur JSX
 {/* Modal Structure */}
 
 
-_------------
+------------
 inputs controllés
 
 render() {
@@ -370,3 +373,102 @@ Prinicpe fondamentales
     Store source du verité
 
     Mutations (reduceurs) sont des fonction pures
+
+
+----------
+TEST --> recht-dom/test-utils (voir blog de Kent C Dodds)
+
+Framework de base pour faire des test. Les autres lib vont se baser sur ça.
+
+JEST utilise une lib : JSDOM pour simuler le dom (les test étant lancés sur NodeJS)
+
+Shallow rendering: créer le component sans ses enfant ! (CHERCHER!!!)
+
+MemoryReouter (à utiliser dans les tests pour ne pas se baser sur document.location)
+Doc. Jest expect lib
+
+Autre outil
+	'react-testing-library' Lis de K. Doods
+
+fonction rendre que retourne une api des fonctions sur les DOM crée, comme
+
+get --> je cherche s'il est tout suite et bloquante s'il le trouve pas KO
+find --> il va attendre jusqu'il apparaisse
+query --> il cherche s'il trouve pas, il plante pas
+fireEvent --> pour lancer des events sur les elements retournés par get 
+
+exemple:
+  const { getByText } = render(
+    <MemoryRouter>
+      <App />
+    </MemoryRouter>,
+    div
+  )
+  expect(getByText('Welcome to my store!')).toBeInTheDocument()
+
+Snapshot
+	toMatchSnapshot -> 1er fois: il le stocke dans un dossier snapshot (avec le tree du rendu)
+	Lorsque qqn d'autre fais un changement, le snapshot est différent, donc on doit prendre la 
+	décision de corriger le component ou mettre à jour le snapshot
+	
+
+ENZYME couch AirBnB
+	Propose 3 renderer : 
+		- mount 
+		- render (génère les sous components en string) il est statique (agit pas aux events)
+		- shallow (render juste le élément principal mais pas les sous enfants de 
+			components inclus) : beaucoup plus proche du component (POUR DES TU !!)
+
+-------------------------------------
+Internationalisation
+
+LIB: message format
+	react-i18next
+
+-------------------------------------
+REDUX
+
+Il faut identifier les events et les actions qui découlent de ça
+
+reducer reçoit un state initial, une action et retourne le nouveau state
+mais quelle est le state initial
+
+	un objet qui contient une clé par reduceur
+
+Il faut toujours cloner les states dans le reducer pour les modifier et les retourner
+Utilise immutable pour avoir les Map/Set/List qu'on utilise déjà sur Java
+
+Les liens entre react et redux se passe dans react-redux, et ce qui importe de redux est de create le Store (createStore), et pour ça il a besoin du stateInitial + reducer(s)
+
+Store expose 
+	dispatch
+	getState
+	replaceReducer (si on vest remplacer les reducers en plein execution (hot reload)
+	subscribe (s'abonner aux modifs du store) --> prend une fonction sans params, et à
+		l'utiliser pour faire le render des components pour qu'ils se mettent à jour
+
+Le store pour ne pas l'avoir dans window, il faut le passer via un Context qui a un Provider pour
+passer l'info + un Consumer pour l'utiliser
+
+<Provider monContext>
+	<Mes compoents> --> donc monContext est dispo pour tout l'arbo
+</Provider>
+
+tout ça dans react-redux, un autre package à installer -> Pour avoir le connect au context
+
+Lorsqu'on est en mode connect()(COMPOENENT) -> les props qu'il reçoit a le state et dispatch !!! attaché par  magie)
+
+combineReducer pour ne pas passer tout le state aux reducers mais qu'un partie
+mapStateToProps: appelé à chaque fois qu'il se passe qqch dans le state.
+
+Attention aux tests, la version connecté (avec le store) et la version non connecté du test.
+
+---------------------
+Middleware
+
+avec CreateStore, 3ème param, le middleware
+
+un middleware a accès à un store (pas le même store de redux mais un truc réduit, avec dispatch et getState.
+
+({dispatch, getState}) => next => action => {ce qu'on veut faire}
+	
